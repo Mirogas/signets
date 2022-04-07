@@ -8,73 +8,71 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TwitterPicker } from 'react-color';
 import { useState } from 'react';
 
-export default function AjoutDossier({ouvert, setOuvert, gererAjoutDossier}){
-
-    const [titre, setTitre] = useState("");
-    const [couverture, setCouverture] = useState("");
-    const [couleur, setCouleur] = useState("#000");
-
+export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
+    const [titre, setTitre] = useState('');
+    const [couverture, setCouverture] = useState('');
+    const [couleur, setCouleur] = useState('#000');
 
     const gererOuvrir = () => {
-        setOuvert(true)
-    }
+        setOuvert(true);
+    };
 
     const gererFermer = () => {
-        setTitre("");
-        setCouverture("")
-        setCouleur("#000");
+				// Constater le bogue avant de réinitialiser les états des valeurs de formulaire
+				// setTitre('');
+				// setCouverture('');
+				// setCouleur('#000')
         setOuvert(false);
-    }
+    };
 
-    function gererSoumettre(){
-        // code qui gere l'ajout dans firebase
-
-        gererAjoutDossier(titre, couverture, couleur);
-        gererFermer();
-    }
+		function gererSoumettre() {
+			// Code qui gère l'ajout dans Firestore
+			gererAjoutDossier(titre, couverture, couleur);
+			gererFermer();
+		}
 
     return (
-
-    <div>
-      <Dialog open={ouvert} onClose={gererFermer}>
-        <DialogTitle>Nouveau dossier</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Choisissez un nom, image de couverture et couleur pour votre nouveau dossier de signets
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="titre"
-            label="Titre du dossier"
-            type="text"
-            fullWidth
-            variant="standard"
-            onChange = {evt => setTitre(evt.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="couverture"
-            label="Image couverture du dossier"
-            type="url"
-            fullWidth
-            variant="standard"
-            onChange = {evt => setCouverture(evt.target.value)}
-          />
-          <TwitterPicker
-            triangle = "hide"
-            color = {couleur}
-            colors = {["#000", "#00f", "#0ff", "#0f0", "#ff0", "#FF8633", "#f00", "#f0f"]}
-            width = "auto"
-            onChangeComplete = {(couleur, evt) => setCouleur(couleur.hex)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={gererFermer}>Annuler</Button>
-          <Button onClick={gererFermer}>Soumettre</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        <div>
+            <Dialog open={ouvert} onClose={gererFermer}>
+                <DialogTitle>Ajouter un dossier</DialogTitle>
+                <DialogContent>
+                    {/* Titre du dossier */}
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="titre"
+                        label="Titre du dossier"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={e => setTitre(e.target.value)}
+                    />
+                    {/* URL de l'image */}
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="couverture"
+                        label="Image couverture du dossier"
+                        type="url"
+                        fullWidth
+                        variant="standard"
+                        style={{ marginBottom: "1.5rem" }}
+                        onChange={e => setCouverture(e.target.value)}
+                    />
+                    {/* Choix de couleur */}
+                    <TwitterPicker
+                        triangle='hide'
+                        color={couleur}
+                        colors={["#900", "#090", "#009"]}
+                        width="auto"
+                        onChangeComplete={(couleur, e) => setCouleur(couleur.hex)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={gererFermer}>Annuler</Button>
+                    <Button onClick={gererSoumettre}>Soumettre</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     );
-};
+}
