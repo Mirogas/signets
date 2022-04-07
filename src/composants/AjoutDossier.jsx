@@ -18,17 +18,20 @@ export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
     };
 
     const gererFermer = () => {
-				// Constater le bogue avant de réinitialiser les états des valeurs de formulaire
-				// setTitre('');
-				// setCouverture('');
-				// setCouleur('#000')
+				// il faut réinitialiser les états des valeurs de formulaire sinon les dernières valeurs saisies seront sauvegardées dans le états 
+        // et appliquées au prochain signet par défaut
+				setTitre('');
+				setCouverture('');
+				setCouleur('#000')
         setOuvert(false);
     };
 
 		function gererSoumettre() {
 			// Code qui gère l'ajout dans Firestore
-			gererAjoutDossier(titre, couverture, couleur);
-			gererFermer();
+      if(titre.search(/[a-z]{2,}/i) != -1){
+        gererAjoutDossier(titre, couverture, couleur);
+        gererFermer();
+      }
 		}
 
     return (
@@ -49,7 +52,6 @@ export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
                     />
                     {/* URL de l'image */}
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="couverture"
                         label="Image couverture du dossier"
