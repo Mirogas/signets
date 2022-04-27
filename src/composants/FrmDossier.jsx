@@ -3,41 +3,41 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TwitterPicker } from 'react-color';
 import { useState } from 'react';
 
-export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
+export default function FrmDossier({id=null, titre_p='', couverture_p='', couleur_p='#000', ouvert, setOuvert, gererActionDossier }) {
     const [titre, setTitre] = useState('');
     const [couverture, setCouverture] = useState('');
     const [couleur, setCouleur] = useState('#000');
 
-    const gererOuvrir = () => {
-        setOuvert(true);
-    };
-
-    const gererFermer = () => {
-				// il faut réinitialiser les états des valeurs de formulaire sinon les dernières valeurs saisies seront sauvegardées dans le états 
+    const viderEtFermerFrm = () => {
+		// il faut réinitialiser les états des valeurs de formulaire sinon les dernières valeurs saisies seront sauvegardées dans le états 
         // et appliquées au prochain signet par défaut
-				setTitre('');
-				setCouverture('');
-				setCouleur('#000')
+		setTitre(titre_p);
+		setCouverture(couverture_p);
+		setCouleur(couleur_p);
         setOuvert(false);
     };
 
-		function gererSoumettre() {
-			// Code qui gère l'ajout dans Firestore
-      if(titre.search(/[a-z]{2,}/i) != -1){
-        gererAjoutDossier(titre, couverture, couleur);
-        gererFermer();
-      }
-		}
+	function gererSoumettre() {
+		// Code qui gère l'ajout dans Firestore
+        if(titre.search(/[a-z]{2,}/i) !== -1){
+            gererActionDossier(id, titre, couverture, couleur);
+
+            // appeler uniquement lorsqu'on ajoute un nouveau dossier
+            if(id == null){
+                viderEtFermerFrm();
+            }
+            setOuvert(false);
+        }
+	}
 
     return (
         <div>
-            <Dialog open={ouvert} onClose={gererFermer}>
-                <DialogTitle>Ajouter un dossier</DialogTitle>
+            <Dialog open={ouvert} onClose={viderEtFermerFrm}>
+                <DialogTitle>Modifier le dossier</DialogTitle>
                 <DialogContent>
                     {/* Titre du dossier */}
                     <TextField
@@ -48,6 +48,7 @@ export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
                         type="text"
                         fullWidth
                         variant="standard"
+                        value = {titre}
                         onChange={e => setTitre(e.target.value)}
                     />
                     {/* URL de l'image */}
@@ -60,6 +61,7 @@ export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
                         variant="standard"
                         style={{ marginBottom: "1.5rem" }}
                         onChange={e => setCouverture(e.target.value)}
+                        value={couverture}
                     />
                     {/* Choix de couleur */}
                     <TwitterPicker
@@ -71,7 +73,7 @@ export default function AjoutDossier({ ouvert, setOuvert, gererAjoutDossier }) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={gererFermer}>Annuler</Button>
+                    <Button onClick={viderEtFermerFrm}>Annuler</Button>
                     <Button onClick={gererSoumettre}>Soumettre</Button>
                 </DialogActions>
             </Dialog>

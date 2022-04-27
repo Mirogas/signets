@@ -4,7 +4,7 @@ import './Appli.scss';
 // sous composants
 import Entete from './Entete';
 import ListeDossiers from './ListeDossiers';
-import AjoutDossier from './AjoutDossier';
+import FrmDossier from './FrmDossier';
 import Accueil from './Accueil';
 
 // composants externes
@@ -29,7 +29,7 @@ export default function Appli() {
   const [ouvert, setOuvert] = useState(false);
 
   // Gérer l'ajout d'un dossier
-  function gererAjoutDossier(titre, couverture, couleur) {
+  function ajouterDossier(id, titre, couverture, couleur) {
     dossierModele.creer(utilisateur.uid, {
       titre: titre,
       couverture: couverture,
@@ -55,7 +55,7 @@ export default function Appli() {
             <section className="contenu-principal">
               <ListeDossiers utilisateur={utilisateur} dossiers={dossiers} setDossiers={setDossiers}  />
               {/* Ajouter un composant FormDialog de MUI */}
-              <AjoutDossier ouvert={ouvert} setOuvert={setOuvert} gererAjoutDossier={gererAjoutDossier} />
+              <FrmDossier ouvert={ouvert} setOuvert={setOuvert} gererActionDossier={ajouterDossier} />
               <Fab onClick={() => setOuvert(true)} size="large" className="ajoutRessource" color="primary" aria-label="Ajouter dossier">
                 <AddIcon />
               </Fab>
