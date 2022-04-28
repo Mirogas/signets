@@ -43,7 +43,7 @@ export async function creer(idUtilisateur, dossier) {
  */
 export async function supprimer(uid, idDossier){
     // doc permet de mélanger des strings et variables pour définir le chemin du dossier
-    let refDoc = doc(bdFirestore, "signet/", uid, "dossier/", idDossier);
+    let refDoc = doc(bdFirestore, "signet", uid, "dossier", idDossier);
     return await deleteDoc(refDoc);
 }
 

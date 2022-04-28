@@ -1,12 +1,20 @@
 
 import { bdFirestore } from "./init";
-import { getDocs, query, orderBy, collection, addDoc, getDoc, deleteDoc, updateDoc, doc} from "firebase/firestore";
+import { updateDoc, doc} from "firebase/firestore";
 
-export async function creer(uid, idDossier, url){
+
+/**
+ * Ajoute un signet en recréant le tableau des top3 dans le dossier identifié
+ * @param {String} uid id de l'utilisateur
+ * @param {String} idDossier id du dossier identifié
+ * @param {Object[]} derniers3 objet contenant max3 url
+ * @returns {Promise<void>} Promesse sans paramètres une fois que la requetes est finie
+ */
+export async function creer(uid, idDossier, derniers3){
         // Référence au document dans lequel on veut ajouter le signet
-    let coll = collection(bdFirestore, 'signets', uid, 'dossiers', idDossier);
+    let docRef = doc(bdFirestore, 'signets', uid, 'dossiers', idDossier);
     // modifier le document pour ajouter le signet
     
-    return await updateDoc(docRef, {});
+    return await updateDoc(docRef, {top3: derniers3});  
 
 }

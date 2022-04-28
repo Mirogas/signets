@@ -8,7 +8,7 @@
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
     "color": "^4.2.1",
-    "firebase": "^9.6.8",
+    "firebase": "^9.6.11",
     "gh-pages": "^3.2.3",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",

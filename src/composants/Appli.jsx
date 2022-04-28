@@ -12,10 +12,12 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 // fonctionalitées requises
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
 // Remarquer les deux façons différentes d'importer des fonctionnalités
 import { observerEtatConnexion } from '../code/utilisateur-modele';
 import * as dossierModele from "../code/dossier-modele";
+
+export const UtilisateurContext = createContext(null);
 
 
 export default function Appli() {
@@ -50,10 +52,11 @@ export default function Appli() {
   
   return (
       utilisateur ?
+      <UtilisateurContext.Provider value={utilisateur}>
         <div className="Appli">
-            <Entete utilisateur={utilisateur} />
+            <Entete/>
             <section className="contenu-principal">
-              <ListeDossiers utilisateur={utilisateur} dossiers={dossiers} setDossiers={setDossiers}  />
+              <ListeDossiers dossiers={dossiers} setDossiers={setDossiers}  />
               {/* Ajouter un composant FormDialog de MUI */}
               <FrmDossier ouvert={ouvert} setOuvert={setOuvert} gererActionDossier={ajouterDossier} />
               <Fab onClick={() => setOuvert(true)} size="large" className="ajoutRessource" color="primary" aria-label="Ajouter dossier">
@@ -61,6 +64,7 @@ export default function Appli() {
               </Fab>
             </section>
         </div>
+        </UtilisateurContext.Provider>
       : 
         <Accueil />
   

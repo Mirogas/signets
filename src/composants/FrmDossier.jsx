@@ -27,7 +27,7 @@ export default function FrmDossier({id=null, titre_p='', couverture_p='', couleu
             gererActionDossier(id, titre, couverture, couleur);
 
             // appeler uniquement lorsqu'on ajoute un nouveau dossier
-            if(id == null){
+            if(id === null){
                 viderEtFermerFrm();
             }
             setOuvert(false);

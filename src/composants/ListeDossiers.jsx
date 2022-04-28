@@ -1,11 +1,14 @@
 import './ListeDossiers.scss';
 import Dossier from './Dossier';
-import { useEffect } from 'react';
+import { useEffect, useContext} from 'react';
 import * as dossierModele from '../code/dossier-modele';
+  import { UtilisateurContext } from './Appli';
 
-export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
+
+export default function ListeDossiers( {dossiers, setDossiers}) {
   // console.log("Objet utilisateur retourné par le Provider GoogleAuth : ", utilisateur);
 
+  const utilisateur = useContext(UtilisateurContext);
 
   // Lire les dossiers (de l'utilisateur connecté) dans Firestore
   useEffect(
@@ -46,11 +49,6 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
     );
   }
 
-  function ajouterSignet(idDossier, url){
-
-
-  }
-
   return (
     <ul className="ListeDossiers">
       {
@@ -58,7 +56,7 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
           // Remarquez l'utilisation du "spread operator" pour "étaler" les 
           // propriétés de l'objet 'dossier' reçu en paramètre de la fonction
           // fléchée dans les props du composant 'Dossier' !!
-          dossier => <li key={dossier.id}><Dossier  {...dossier} supprimerDossier={supprimerDossier} modifierDossier={modifierDossier} ajouterSignet={ajouterSignet} /></li>
+          dossier => <li key={dossier.id}><Dossier  {...dossier} supprimerDossier={supprimerDossier} modifierDossier={modifierDossier} /></li>
         )
       }
     </ul>
