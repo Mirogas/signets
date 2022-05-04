@@ -15,45 +15,97 @@
     }
   }
 
+  
+  &.actif .carte{
+    transform: rotateY(180deg);
+  }
+
+  .carte{
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+
+
+    .endroit,
+    .envers{
+      // position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+    }
+    .endroit{
+      position: relative;
+
+      .couverture{
+        height: 200px;
+        pointer-events: none;
+        
+        img{
+          width: 300px;
+          height: 200px;
+          object-fit: cover;
+        }
+      }
+
+      .deplacer {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        cursor: grab;
+        background-color: rgba($color: #000000, $alpha: 0.4);
+        color: #ccc;
+        &:hover {
+          background-color: rgba($color: #000000, $alpha: 0.5);
+        }
+      }
+
+      .info {
+        padding: 1rem 0.75rem;
+        pointer-events: none;
+        height: 150px;
+        h2 {
+          margin: 0;
+          padding: 0;
+          font-weight: normal;
+          font-family: Comic Sans ms;
+          text-overflow: ellipsis;
+        }
+      }
+
+    }
+
+    .envers{
+      position: absolute;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .tourner-carte{
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 3rem;
+        width: 3rem;
+        border: none;
+      }
+      a{
+        padding: 0.5rem;
+        margin: 0.5rem;
+        border-top: grey solid 1px;
+        border-bottom: grey solid 1px;
+      }
+    }
+  }
+
 
   img {
     width: 100%;
     height: 100%;
     pointer-events: none;
 
-  }
-  .deplacer {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: grab;
-    background-color: rgba($color: #000000, $alpha: 0.4);
-    color: #ccc;
-    &:hover {
-      background-color: rgba($color: #000000, $alpha: 0.5);
-    }
-    .couverture{
-      height: 200px;
-      pointer-events: none;
-      
-      img{
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-      }
-    }
-  }
-
-  .info {
-    padding: 1rem 0.75rem;
-    pointer-events: none;
-
-    h2 {
-      margin: 0;
-      padding: 0;
-      font-weight: normal;
-      font-family: Comic Sans ms;
-    }
   }
 
   .modifier {
